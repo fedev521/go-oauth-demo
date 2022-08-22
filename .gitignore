@@ -1,0 +1,9 @@
+# env files, but not examples
+.env
+.env*
+!.env.example
+!.env*.example
+
+# private keys and certificates
+*.key
+*.crt
