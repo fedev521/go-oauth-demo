@@ -237,6 +237,29 @@ On the server side, the `ListenAndServeTLS()` function documentation states:
 > be the concatenation of the server's certificate, any intermediates, and the
 > CA's certificate.
 
+## Docker
+
+Build image:
+
+```bash
+cd server
+docker build -t gosrv .
+```
+
+Run the container:
+
+```bash
+docker run --rm gosrv
+# or
+docker run --network="host" --rm gosrv
+```
+
+Useful:
+
+- `docker inspect bridge | grep -B 3 -A 2 "IPv4"`
+- `curl -k -D /dev/stderr -w "\n" --cacert ca.crt -H "Authorization: Bearer
+  ${TOKEN}" -X GET https://$ADDR:$PORT/api/v1/products`
+
 ## Useful Resources
 
 - [Understanding HandlerFunc on
@@ -245,16 +268,18 @@ On the server side, the `ListenAndServeTLS()` function documentation states:
   sample](https://github.com/auth0-samples/auth0-golang-api-samples/tree/master/01-Authorization-RS256)
 - [Example
   scenario](https://auth0.com/docs/get-started/apis/scopes/api-scopes#example-an-api-called-by-a-back-end-service)
+- [Local CA for
+  development](https://deliciousbrains.com/ssl-certificate-authority-for-local-https-development/)
+- [Go SSL server with perfect
+  score](https://blog.bracebin.com/achieving-perfect-ssl-labs-score-with-go)
 
 ## TODO
 
-Next
-
-- Docker
-
-Nice to try:
+Nice to have:
 
 - validate access token only for some paths of the API
 - CORS
 - graceful degradation
 - mTLS
+  - https://smallstep.com/hello-mtls/doc/server/go
+  - https://smallstep.com/hello-mtls/doc/combined/go/curl
